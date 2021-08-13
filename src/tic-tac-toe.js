@@ -26,8 +26,9 @@ class TicTacToe {
     }
 
     isFinished() {
-      for (let rowNumber = 0; rowNumber < this.field.length - 1; rowNumber++) {
-        for (let colNumber = 0; colNumber < this.field.length - 1; colNumber++) {
+      if (this.getWinner() !== null) return true;
+      for (let rowNumber = 0; rowNumber < this.field.length; rowNumber++) {
+        for (let colNumber = 0; colNumber < this.field.length; colNumber++) {
           if (this.field[rowNumber][colNumber] === '') {
             return false;
           }
@@ -38,18 +39,16 @@ class TicTacToe {
 
     getWinner() {
       if (this.turnNumber > 5) {
-        for (let rowNumber = 0; rowNumber < this.field.length - 1; rowNumber++) {
+        for (let rowNumber = 0; rowNumber < this.field.length; rowNumber++) {
           const row = this.field[rowNumber];
-            if (row[0] === row[1] === row[2] && (row[0] !== '')) {
+            if (row[0] === row[1] && row[1] === row[2] && (row[0] !== '')) {
               return row[0];
             } 
+            if (this.field[0][rowNumber] === this.field[1][rowNumber] && this.field[1][rowNumber] === this.field[2][rowNumber] && (this.field[0][rowNumber] !== '')) {
+              return this.field[0][rowNumber];
+            } 
           }
-          for (let colNumber = 0; colNumber < this.field.length - 1; colNumber++) {
-            const col = this.field[colNumber];
-              if (col[0] === col[1] === col[2] && (col[0] !== '')) {
-                return col[0];
-              } 
-            }
+          
             if((this.field[0][0] === this.field[1][1] && this.field[1][1] === this.field[2][2]) && (this.field[1][1] !== '')) {
                 return this.field[0][0];
               }               
@@ -71,7 +70,7 @@ class TicTacToe {
     }
 
     isDraw() {
-
+      if (this.getWinner() !== null) return false;
       for (let rowNumber = 0; rowNumber < this.field.length - 1; rowNumber++) {
         const row = this.field[rowNumber];
           if (row[0] === row[1] === row[2]) {
